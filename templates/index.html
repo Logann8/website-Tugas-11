@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Distribusi Poisson</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Distribusi Poisson</h1>
+        <p>
+            Studi kasus: **Peminjaman Buku di Perpustakaan**. Aplikasi ini menghitung probabilitas peminjaman
+            buku berdasarkan rata-rata peminjaman dalam suatu periode.
+        </p>
+        <form method="POST">
+            <label for="mean">Rata-rata peminjaman per hari (λ):</label>
+            <input type="number" id="mean" name="mean" step="0.01" required>
+
+            <label for="xValue">Jumlah buku yang ingin dihitung probabilitasnya (X):</label>
+            <input type="number" id="xValue" name="xValue" step="1" required>
+
+            <button type="submit">Hitung</button>
+        </form>
+
+        {% if result is not none %}
+        <div class="result">
+            <h2>Hasil Perhitungan</h2>
+            <p>Probabilitas untuk X = {{ x_value }} dengan λ = {{ mean }} adalah: <strong>{{ result }}</strong></p>
+        </div>
+        {% endif %}
+
+        {% if distribution_table %}
+        <div class="table-container">
+            <h2>Tabel Distribusi Poisson</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Probabilitas P(X)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in distribution_table %}
+                    <tr>
+                        <td>{{ row.x }}</td>
+                        <td>{{ row.probability }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
